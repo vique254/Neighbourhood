@@ -3,16 +3,16 @@
 {% load bootstrap3 %}
 {% block content %}
 <div class="container">
-    <div class="row" style="margin-top: 100px;">
+    <div class="row" style="margin-top: 150px;">
         <div class="col-md-4"></div>
         <div class="col-md-4">
             {% if form.errors %}
             <p>Password or Username is incorrect </p>
             {% endif %}
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width:350px;height: 380px;background: rgba(0, 0, 0, 0.5);  color: #f1f1f1; background: rgb(0, 0, 0);  position: absolute;">
                 <div class="card-body">
                     <h5 class="card-title">Sign In</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Please Fill Your Details Below</h6>
+                    <h6 class="card-subtitle mb-2 text-muted" style="color: white;">Please Fill Your Details Below</h6>
                     <p class="card-text">
                         <form action="/accounts/login/" method='post'>
                             {% csrf_token %}
@@ -31,4 +31,15 @@
         <div class="col-md-4"></div>
     </div>
 </div>
+<style>
+body{
+    background-image:url(' https://cdn.pixabay.com/photo/2016/09/12/13/31/new-home-1664317__340.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    font-size: 28px;
+    font-family: 'Nosifer';font-size: 22px;
+}
+</style>
 {% endblock %}
