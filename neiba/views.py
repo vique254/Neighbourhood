@@ -7,6 +7,7 @@ from .forms import *
 from .models import *
 
 # Create your views here.
+@login_required(login_url='/accounts/login/')
 def home(request):
       try: 
         current_user = request.user
@@ -39,7 +40,17 @@ def edit_profile(request):
     return render(request,'edit_profile.html',{"form":form})
   
   @login_required(login_url='/accounts/login/')
-def biz(request):
+  
+  
+  @login_required(login_url='/accounts/login/')
+def business(request):
+    current_user = request.user
+    profile = Profile.objects.get(user=current_user)
+    business = Business.objects.filter(neibourhood=profile.neighbourhood)
+    print(business)
+    return render(request,'bs.html',{'business':business})
+  
+def new_biz(request):
     current_user = request.user
     profile = Profile.objects.get(user=current_user)
     if request.method == 'POST':
