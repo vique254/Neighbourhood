@@ -11,3 +11,5 @@ urlpatterns =[
     url(r'business$', views.business, name='business'),
     url(r'business/new$', views.new_biz, name='new_biz'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
