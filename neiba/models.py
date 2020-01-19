@@ -75,7 +75,7 @@ class Business(models.Model):
     def find_biz(cls,term):
         result = cls.objects.filter(name__icontains=term)
         return result
-    
+    @classmethod
     def search_by_name(cls,search_term):
         neiba = cls.objects.filter(name__icontains=search_term)
         return neiba

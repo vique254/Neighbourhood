@@ -9,7 +9,7 @@ from .models import *
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def home(request):
-      try: 
+    try: 
         current_user = request.user
         profile = Profile.objects.get(user=current_user)
     except ObjectDoesNotExist:
@@ -39,10 +39,7 @@ def edit_profile(request):
         form = ProfileForm()
     return render(request,'edit_profile.html',{"form":form})
   
-  @login_required(login_url='/accounts/login/')
-  
-  
-  @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def business(request):
     current_user = request.user
     profile = Profile.objects.get(user=current_user)
