@@ -1,0 +1,2 @@
+Hello  {{name}},
+Welcome to Neighbourhood. You have made the right decision to join us, you are welcome.Congratulations for being part of us.
