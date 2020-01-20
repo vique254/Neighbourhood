@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.shortcuts import render,redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
@@ -11,32 +11,29 @@ from .models import *
 @login_required(login_url='/accounts/login/')
 def home(request):
             form = BusinessForm(request.POST)
+            if form.is_valid():
+                name = form.cleaned_data['your_name']
+                email = form.cleaned_data['email']
 
+                recipient = NewsLetterRecipients(name = name,email =email)
+                recipient.save()
+                send_welcome_email(name,email)
 
-if form.is_valid():
-            name = form.cleaned_data['your_name']
-            email = form.cleaned_data['email']
-
-            recipient = NewsLetterRecipients(name=name, email=email)
-            recipient.save()
-            send_welcome_email(name, email)
-
-            HttpResponseRedirect('home')
-
-            try:
+            HttpResponseRedirect('/')
+    
+            try: 
                 current_user = request.user
                 profile = Profile.objects.get(user=current_user)
             except ObjectDoesNotExist:
-                return redirect('edit')
-
-    return render (request,'home.html',{"letterForm":form})
+               return redirect('edit')
+            return render (request,'home.html',{"letterForm":form})
 
 
 
 
 def profile(request):
     current_user =request.user
-    profile=Profile.objects.get(user=current_user)
+    profile=Profile.objects.get or create(user=current_user)
     
     return render(request,'profile.html',{'profile':profile})
 
@@ -76,7 +73,7 @@ def new_biz(request):
     else:
         form = BusinessForm()
         
-    return render(request,'biz.html',{'form':form}) 
+    return render(request,'new_bs.html',{'form':form}) 
 
 
 def search_results(request):
@@ -86,7 +83,7 @@ def search_results(request):
         searched_businesses = Business.search_by_name(search_term)
         message = f"{search_term}"
 
-        return render(request, 'search.html',{"message":message,"business": searched_business})
+        return render(request, 'search.html',{"message":message,"business": searched_businesses})
 
     else:
         message = "You haven't searched for any term"
