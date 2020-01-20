@@ -14,7 +14,7 @@ a web application that allows user to be in the loop about everything happening 
 * Open the project with a text editor eg visual studio (code .) or atom (atom .)
 
 ## Live link
-
+https://neibaa.herokuapp.com/
 ## Technologies used
 * Python
 * CSS
