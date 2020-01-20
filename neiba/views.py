@@ -1,20 +1,35 @@
 from __future__ import unicode_literals
-from django.http import HttpResponse,Http404,HttpResponseRedirect
-from django.shortcuts import render,redirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
+from .email import send_welcome_email
 from .forms import *
 from .models import *
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def home(request):
-    try: 
-        current_user = request.user
-        profile = Profile.objects.get(user=current_user)
-    except ObjectDoesNotExist:
-        return redirect('edit')
-    return render (request,'home.html')
+            form = BusinessForm(request.POST)
+
+
+if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+
+            recipient = NewsLetterRecipients(name=name, email=email)
+            recipient.save()
+            send_welcome_email(name, email)
+
+            HttpResponseRedirect('home')
+
+            try:
+                current_user = request.user
+                profile = Profile.objects.get(user=current_user)
+            except ObjectDoesNotExist:
+                return redirect('edit')
+
+    return render (request,'home.html',{"letterForm":form})
 
 
 
