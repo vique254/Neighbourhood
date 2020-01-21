@@ -8,7 +8,7 @@ from .forms import *
 from .models import *
 
 # Create your views here.
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login')
 def home(request):
             form = BusinessForm(request.POST)
             if form.is_valid():
@@ -21,11 +21,7 @@ def home(request):
 
             HttpResponseRedirect('/')
     
-            try: 
-                current_user = request.user
-                profile = Profile.objects.get(user=current_user)
-            except ObjectDoesNotExist:
-               return redirect('edit')
+            
             return render (request,'home.html',{"letterForm":form})
 
 
@@ -33,7 +29,7 @@ def home(request):
 
 def profile(request):
     current_user =request.user
-    profile=Profile.objects.get or create(user=current_user)
+    profile=Profile.objects.get(user_id =current_user.id)
     
     return render(request,'profile.html',{'profile':profile})
 
@@ -54,20 +50,18 @@ def edit_profile(request):
 @login_required(login_url='/accounts/login/')
 def business(request):
     current_user = request.user
-    profile = Profile.objects.get(user=current_user)
-    business = Business.objects.filter(neibourhood=profile.neighbourhood)
+    profile = Profile.objects.get(user_id = current_user.id)
+    business = Business.objects.all()
     print(business)
     return render(request,'bs.html',{'business':business})
   
 def new_biz(request):
     current_user = request.user
-    profile = Profile.objects.get(user=current_user)
     if request.method == 'POST':
         form = BusinessForm(request.POST,request.FILES)
         if form.is_valid():
             biz = form.save(commit = False)
             biz.user = current_user
-            biz.neighbourhood = profile.neighbourhood
             biz.save()
         return redirect('business')
     else:

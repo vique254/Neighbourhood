@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load bootstrap3 %}
 {% block content %}
 {{ block.super }}
@@ -12,7 +13,7 @@
                     <h5 class="card-title">Edit Profile</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Update Your Details Below</h6>
                     <p class="card-text">
-                        <form  method='post' enctype="multipart/form-data">
+                        <form action="{% url 'edit'%}" method='post' enctype="multipart/form-data">
                             {% csrf_token %}
                             {% bootstrap_form form%}
                             <div class="form-group">

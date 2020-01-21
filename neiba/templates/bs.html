@@ -13,10 +13,7 @@
             <h1 style="text-align: center;">Business</h1>
         </div>
     </div>
-    <div class="text-center">
-        <a href="{% url 'new_biz'%}"> <button class="btn btn-outline-success" style="border-radius: 12px;">Add Business</button> </a>
-    </div>
-    <div class="row">
+ 
         {% for biz in business %}
         <div class="col-md-6">
             <div class="card" style="width: 18rem;">
@@ -28,7 +25,12 @@
                 </div>
             </div>
         </div>
+        
         {%endfor%}
+        <div class="text-center">
+            <a href="{% url 'new_biz'%}"> <button class="btn btn-outline-success" style="border-radius: 12px;">Add Business</button> </a>
+        </div>
+        <div class="row">
     </div>
 </div>
 {%endblock%}
